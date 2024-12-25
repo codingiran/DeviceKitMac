@@ -159,4 +159,17 @@ public extension DeviceKitMac {
         IOObjectRelease(service)
         return uuid
     }
+
+    static var serialNumber: String? {
+        let mainPort: mach_port_t
+        if #available(macOS 12.0, *) {
+            mainPort = kIOMainPortDefault
+        } else {
+            mainPort = kIOMasterPortDefault
+        }
+        let service = IOServiceGetMatchingService(mainPort, IOServiceMatching("IOPlatformExpertDevice"))
+        let serial = IORegistryEntryCreateCFProperty(service, kIOPlatformSerialNumberKey as CFString, kCFAllocatorDefault, 0).takeRetainedValue() as? String
+        IOObjectRelease(service)
+        return serial
+    }
 }
