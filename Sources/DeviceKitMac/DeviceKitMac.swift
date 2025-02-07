@@ -12,15 +12,19 @@ import Foundation
 #error("DeviceKitMac doesn't support Swift versions below 5.9.0")
 #endif
 
-/// Current DeviceKitMac version 1.0.0. Necessary since SPM doesn't use dynamic libraries. Plus this will be more accurate.
-let version = "1.0.0"
+/// Current DeviceKitMac version 1.0.2. Necessary since SPM doesn't use dynamic libraries. Plus this will be more accurate.
+let version = "1.0.2"
 
-public enum DeviceKitMac {}
+public enum DeviceKitMac: Sendable {}
 
 // MARK: - System Version
 
 public extension DeviceKitMac {
+#if compiler(>=6)
+    nonisolated(unsafe) static let sysVersionDict = NSDictionary(contentsOfFile: "/System/Library/CoreServices/SystemVersion.plist")
+#else
     static let sysVersionDict = NSDictionary(contentsOfFile: "/System/Library/CoreServices/SystemVersion.plist")
+#endif
 
     static var productName: String? {
         guard let sys = sysVersionDict else { return nil }
