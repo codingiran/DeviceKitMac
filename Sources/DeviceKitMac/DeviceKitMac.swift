@@ -12,19 +12,19 @@ import Foundation
 #error("DeviceKitMac doesn't support Swift versions below 5.9.0")
 #endif
 
-/// Current DeviceKitMac version 1.0.2. Necessary since SPM doesn't use dynamic libraries. Plus this will be more accurate.
-let version = "1.0.2"
+/// Current DeviceKitMac version 1.0.3. Necessary since SPM doesn't use dynamic libraries. Plus this will be more accurate.
+let version = "1.0.3"
 
 public enum DeviceKitMac: Sendable {}
 
 // MARK: - System Version
 
 public extension DeviceKitMac {
-#if compiler(>=6)
+    #if compiler(>=6)
     nonisolated(unsafe) static let sysVersionDict = NSDictionary(contentsOfFile: "/System/Library/CoreServices/SystemVersion.plist")
-#else
+    #else
     static let sysVersionDict = NSDictionary(contentsOfFile: "/System/Library/CoreServices/SystemVersion.plist")
-#endif
+    #endif
 
     static var productName: String? {
         guard let sys = sysVersionDict else { return nil }
@@ -77,6 +77,8 @@ public extension DeviceKitMac {
         case "Mac14,15": return "MacBook Air M2 2023 15inch"
         case "Mac15,12": return "MacBook Air M3 2024 13inch"
         case "Mac15,13": return "MacBook Air M3 2024 15inch"
+        case "Mac16,12": return "MacBook Air M4 2025 13inch"
+        case "Mac16,13": return "MacBook Air M4 2025 15inch"
         /*** MacBook ***/
         case "MacBook8,1": return "MacBook Mid 2017"
         case "MacBook9,1": return "MacBook Mid 2017"
@@ -142,6 +144,8 @@ public extension DeviceKitMac {
         case "Mac13,2": return "Mac Studio M1 Ultra 2022"
         case "Mac14,13": return "Mac Studio M2 Max 2023"
         case "Mac14,14": return "Mac Studio M2 Ultra 2023"
+        case "Mac15,14": return "Mac Studio M3 Ultra 2025"
+        case "Mac16,9": return "Mac Studio M4 Max 2025"
         /*** Unknown ***/
         default: return device
         }
