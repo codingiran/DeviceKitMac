@@ -8,11 +8,13 @@ final class DeviceKitMacTests: XCTestCase {
         let productVersion = DeviceKitMac.productVersion
         let productBuildVersion = DeviceKitMac.productBuildVersion
         let serialNumber = DeviceKitMac.serialNumber
+        let computerName = DeviceKitMac.computerName
 
         print("deviceName: \(deviceName)")
         print("productName: \(productName ?? "unknown")")
         print("productVersion: \(productVersion ?? "unknown")")
         print("productBuildVersion: \(productBuildVersion ?? "unknown")")
         print("serialNumber: \(serialNumber ?? "unknown")")
+        print("computerName: \(computerName ?? "unknown")")
     }
 }

@@ -9,11 +9,11 @@ import Foundation
 
 // Enforce minimum Swift version for all platforms and build systems.
 #if swift(<5.9.0)
-#error("DeviceKitMac doesn't support Swift versions below 5.9.0")
+    #error("DeviceKitMac doesn't support Swift versions below 5.9.0")
 #endif
 
-/// Current DeviceKitMac version 1.0.3. Necessary since SPM doesn't use dynamic libraries. Plus this will be more accurate.
-let version = "1.0.3"
+/// Current DeviceKitMac version 1.0.4. Necessary since SPM doesn't use dynamic libraries. Plus this will be more accurate.
+let version = "1.0.4"
 
 public enum DeviceKitMac: Sendable {}
 
@@ -21,9 +21,9 @@ public enum DeviceKitMac: Sendable {}
 
 public extension DeviceKitMac {
     #if compiler(>=6)
-    nonisolated(unsafe) static let sysVersionDict = NSDictionary(contentsOfFile: "/System/Library/CoreServices/SystemVersion.plist")
+        nonisolated(unsafe) static let sysVersionDict = NSDictionary(contentsOfFile: "/System/Library/CoreServices/SystemVersion.plist")
     #else
-    static let sysVersionDict = NSDictionary(contentsOfFile: "/System/Library/CoreServices/SystemVersion.plist")
+        static let sysVersionDict = NSDictionary(contentsOfFile: "/System/Library/CoreServices/SystemVersion.plist")
     #endif
 
     static var productName: String? {
@@ -54,7 +54,7 @@ public extension DeviceKitMac {
         var model = [CChar](repeating: 0, count: Int(size))
         sysctlbyname(code, &model, &size, nil, 0)
 
-        let device = String(validatingUTF8: model) ?? ""
+        let device = String(utf8String: model) ?? ""
         switch device {
         /*** Mac Mini ***/
         case "Macmini6,1", "Macmini6,2": return "Mac Mini Late 2012"
@@ -181,3 +181,18 @@ public extension DeviceKitMac {
         return serial
     }
 }
+
+#if canImport(SystemConfiguration)
+
+    import SystemConfiguration
+
+    // MARK: - Computer Name
+
+    public extension DeviceKitMac {
+        static var computerName: String? {
+            guard let deviceName = SCDynamicStoreCopyComputerName(nil, nil) as? String else { return nil }
+            return deviceName
+        }
+    }
+
+#endif
