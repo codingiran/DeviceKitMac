@@ -8,12 +8,12 @@
 import Foundation
 
 // Enforce minimum Swift version for all platforms and build systems.
-#if swift(<5.9.0)
-    #error("DeviceKitMac doesn't support Swift versions below 5.9.0")
+#if swift(<5.10)
+    #error("DeviceKitMac doesn't support Swift versions below 5.10")
 #endif
 
-/// Current DeviceKitMac version 1.0.4. Necessary since SPM doesn't use dynamic libraries. Plus this will be more accurate.
-let version = "1.0.4"
+/// Current DeviceKitMac version 1.0.5. Necessary since SPM doesn't use dynamic libraries. Plus this will be more accurate.
+let version = "1.0.5"
 
 public enum DeviceKitMac: Sendable {}
 
