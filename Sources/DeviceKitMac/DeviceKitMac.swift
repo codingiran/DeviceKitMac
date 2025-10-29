@@ -12,8 +12,8 @@ import Foundation
     #error("DeviceKitMac doesn't support Swift versions below 5.10")
 #endif
 
-/// Current DeviceKitMac version 1.0.5. Necessary since SPM doesn't use dynamic libraries. Plus this will be more accurate.
-let version = "1.0.5"
+/// Current DeviceKitMac version 1.0.6. Necessary since SPM doesn't use dynamic libraries. Plus this will be more accurate.
+let version = "1.0.6"
 
 public enum DeviceKitMac: Sendable {}
 
