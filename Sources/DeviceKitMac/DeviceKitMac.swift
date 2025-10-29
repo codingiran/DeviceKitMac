@@ -115,6 +115,7 @@ public extension DeviceKitMac {
         case "Mac16,6": return "MacBook Pro 14inch M4 Max"
         case "Mac16,7": return "MacBook Pro 16inch M4 Pro"
         case "Mac16,5": return "MacBook Pro 16inch M4 Max"
+        case "Mac17,2": return "MacBook Pro 14inch M5"
         /*** iMac ***/
         case "iMac13,1", "iMac13,2": return "iMac Late 2012"
         case "iMac14,1", "iMac14,2": return "iMac Late 2013"
