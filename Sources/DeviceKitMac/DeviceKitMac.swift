@@ -50,11 +50,20 @@ public extension DeviceKitMac {
 public extension DeviceKitMac {
     static func deviceName(code: String = "hw.model") -> String {
         var size = 0
-        sysctlbyname(code, nil, &size, nil, 0)
+        guard sysctlbyname(code, nil, &size, nil, 0) == 0, size > 0 else { return "" }
         var model = [CChar](repeating: 0, count: Int(size))
-        sysctlbyname(code, &model, &size, nil, 0)
+        guard sysctlbyname(code, &model, &size, nil, 0) == 0 else { return "" }
 
-        let device = String(utf8String: model) ?? ""
+        // Decode within the buffer: callers can supply a sysctl key other than hw.model.
+        let bytes = model.prefix(size).prefix { $0 != 0 }.map { UInt8(bitPattern: $0) }
+        let device = String(bytes: bytes, encoding: .utf8) ?? ""
+        return deviceName(forModelIdentifier: device)
+    }
+}
+
+extension DeviceKitMac {
+    /// Pure mapping kept internal so tests do not depend on the host's hardware.
+    static func deviceName(forModelIdentifier device: String) -> String {
         switch device {
         /*** Mac Mini ***/
         case "Macmini6,1", "Macmini6,2": return "Mac Mini Late 2012"
@@ -164,9 +173,9 @@ public extension DeviceKitMac {
             mainPort = kIOMasterPortDefault
         }
         let service = IOServiceGetMatchingService(mainPort, IOServiceMatching("IOPlatformExpertDevice"))
-        let uuid = IORegistryEntryCreateCFProperty(service, kIOPlatformUUIDKey as CFString, kCFAllocatorDefault, 0).takeRetainedValue() as? String
-        IOObjectRelease(service)
-        return uuid
+        guard service != IO_OBJECT_NULL else { return nil }
+        defer { IOObjectRelease(service) }
+        return IORegistryEntryCreateCFProperty(service, kIOPlatformUUIDKey as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue() as? String
     }
 
     static var serialNumber: String? {
@@ -177,9 +186,9 @@ public extension DeviceKitMac {
             mainPort = kIOMasterPortDefault
         }
         let service = IOServiceGetMatchingService(mainPort, IOServiceMatching("IOPlatformExpertDevice"))
-        let serial = IORegistryEntryCreateCFProperty(service, kIOPlatformSerialNumberKey as CFString, kCFAllocatorDefault, 0).takeRetainedValue() as? String
-        IOObjectRelease(service)
-        return serial
+        guard service != IO_OBJECT_NULL else { return nil }
+        defer { IOObjectRelease(service) }
+        return IORegistryEntryCreateCFProperty(service, kIOPlatformSerialNumberKey as CFString, kCFAllocatorDefault, 0)?.takeRetainedValue() as? String
     }
 }
 

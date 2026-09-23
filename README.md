@@ -56,7 +56,34 @@ let computerName = DeviceKitMac.computerName
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request. Make sure to read the [Contributing Guidelines](CONTRIBUTING.md) first.
+Contributions are welcome! Please read the [Repository Guidelines](AGENTS.md) before submitting a pull request.
+
+### Testing
+
+Run the tests on macOS using Swift Package Manager:
+
+```sh
+swift test
+swift test --enable-code-coverage
+```
+
+The tests use Swift Testing (`@Suite`, `@Test`, `#expect`, and `#require`). Swift 6+
+includes Testing in its toolchain and needs no package dependency. The Swift 5.10
+manifest pins the test-only `swift-testing` dependency to `0.6.0` and uses its
+XCTest discovery bridge; all test assertions remain in Swift Testing. The library
+itself has no external runtime dependencies.
+
+- `DeviceModelTests` checks representative Intel and Apple Silicon models,
+  aliases, and exact fallback behavior for unknown identifiers without accessing hardware.
+- `SystemInformationTests` checks the host's model, invalid sysctl keys, system
+  version, build number, UUID, serial number, and computer name. Optional hardware
+  identifiers are compared with the registry and may be absent on virtual machines.
+  Assertions do not print UUIDs, serial numbers, or computer names.
+
+With Swift 6+, run a single suite using `swift test --filter DeviceModelTests` or
+`swift test --filter SystemInformationTests`. Swift 5.10 runs both suites through
+the bridge's `testAll` entry point. When adding a model, add a matching identifier
+and expected display name to the parameterized model test.
 
 ## License
 
