@@ -74,6 +74,9 @@ extension DeviceKitMac {
         case "Mac14,12": return "Mac Mini M2 Pro 2023"
         case "Mac16,10": return "Mac Mini M4 2024"
         case "Mac16,11": return "Mac Mini M4 Pro 2024"
+        case "Mac18,5": return "Mac Mini M6 2026"
+        // Mac17,15 is a Mac Studio; see Documentation/DeviceModels.md for source discrepancies.
+        case "Mac17,16": return "Mac Mini M5 Pro 2026"
         /*** MacBook Air ***/
         case "MacBookAir5,1", "MacBookAir5,2": return "MacBook Air Mid 2012"
         case "MacBookAir6,1", "MacBookAir6,2": return "MacBook Air Mid 2013 and Early 2014"
@@ -88,10 +91,14 @@ extension DeviceKitMac {
         case "Mac15,13": return "MacBook Air M3 2024 15inch"
         case "Mac16,12": return "MacBook Air M4 2025 13inch"
         case "Mac16,13": return "MacBook Air M4 2025 15inch"
+        case "Mac17,3": return "MacBook Air M5 2026 13inch"
+        case "Mac17,4": return "MacBook Air M5 2026 15inch"
         /*** MacBook ***/
         case "MacBook8,1": return "MacBook Mid 2017"
         case "MacBook9,1": return "MacBook Mid 2017"
         case "MacBook10,1": return "MacBook Mid 2017"
+        /*** MacBook Neo ***/
+        case "Mac17,5": return "MacBook Neo A18 Pro 2026"
         /*** MacBook Pro ***/
         case "MacBookPro6,1", "MacBookPro6,2", "MacBookPro6,3": return "MacBook Pro Mid 2010"
         case "MacBookPro8,1", "MacBookPro8,2", "MacBookPro8,3": return "MacBook Pro Mid 2011"
@@ -125,6 +132,10 @@ extension DeviceKitMac {
         case "Mac16,7": return "MacBook Pro 16inch M4 Pro"
         case "Mac16,5": return "MacBook Pro 16inch M4 Max"
         case "Mac17,2": return "MacBook Pro 14inch M5"
+        case "Mac17,9": return "MacBook Pro 14inch M5 Pro"
+        case "Mac17,7": return "MacBook Pro 14inch M5 Max"
+        case "Mac17,8": return "MacBook Pro 16inch M5 Pro"
+        case "Mac17,6": return "MacBook Pro 16inch M5 Max"
         /*** iMac ***/
         case "iMac13,1", "iMac13,2": return "iMac Late 2012"
         case "iMac14,1", "iMac14,2": return "iMac Late 2013"
@@ -156,6 +167,8 @@ extension DeviceKitMac {
         case "Mac14,14": return "Mac Studio M2 Ultra 2023"
         case "Mac15,14": return "Mac Studio M3 Ultra 2025"
         case "Mac16,9": return "Mac Studio M4 Max 2025"
+        case "Mac17,14": return "Mac Studio M5 Max 2026"
+        case "Mac17,15": return "Mac Studio M5 Ultra 2026"
         /*** Unknown ***/
         default: return device
         }

@@ -54,6 +54,14 @@ let computerName = DeviceKitMac.computerName
 - No external dependencies
 - Thread-safe operations
 
+### Device model coverage
+
+The model table was last checked on September 23, 2026, adding M5 MacBook Air,
+M5 Pro/Max MacBook Pro, MacBook Neo, M6/M5 Pro Mac mini, and M5 Max/Ultra Mac Studio.
+See [Device Model Updates](Documentation/DeviceModels.md) for identifiers, sources,
+and a documented Mac mini / Mac Studio discrepancy in Apple's identification pages.
+Unknown model identifiers are returned unchanged.
+
 ## Contributing
 
 Contributions are welcome! Please read the [Repository Guidelines](AGENTS.md) before submitting a pull request.
